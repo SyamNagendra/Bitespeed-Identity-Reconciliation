@@ -25,7 +25,7 @@ export async function identify(
   await persistPrimaryConversion(cluster, primary.id);
 
   let currentCluster = await loadClusterByPrimaryId(primary.id);
-  const hasNewInfo = hasNewEmailOrPhone(currentCluster, primary, email, phoneNumber);
+  const hasNewInfo = hasNewEmailOrPhone(currentCluster, email, phoneNumber);
   if (hasNewInfo) {
     await createSecondaryContact(primary.id, email, phoneNumber, currentCluster);
     currentCluster = await loadClusterByPrimaryId(primary.id);
@@ -137,7 +137,6 @@ async function persistPrimaryConversion(
 
 function hasNewEmailOrPhone(
   cluster: Array<{ email: string | null; phoneNumber: string | null }>,
-  primary: { id: number },
   email: string | null,
   phoneNumber: string | null
 ): boolean {
